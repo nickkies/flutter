@@ -1,8 +1,23 @@
 void main() {
+  exception();
   forLoop();
   switchControl('월');
   print(ifControl(10 > 20));
   print(add(1, 2));
+}
+
+void exception() {
+  try {
+    // int num = 10 ~/ 0;
+    throw Exception('error!!!');
+  } on UnsupportedError catch (e, s) {
+    print('0으로 나누지 마세요.');
+    print(s);
+  } catch (e) {
+    rethrow;
+  } finally {
+    print('try문 끝남');
+  }
 }
 
 /// while, do-while 똑같음
