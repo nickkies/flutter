@@ -1,9 +1,39 @@
 void main() {
+  asyncProgram();
   exception();
   forLoop();
   switchControl('월');
   print(ifControl(10 > 20));
   print(add(1, 2));
+}
+
+/// async / await / Future
+/// async* / yield / Stream
+void asyncProgram() {
+  future(1);
+  future(5);
+  future(3);
+
+  stream().listen((data) {
+    print('외부 $data');
+  });
+}
+
+Stream<int> stream() async* {
+  int cnt = 0;
+
+  while (cnt < 5) {
+    await Future.delayed(Duration(seconds: 1));
+    print('내부 $cnt');
+    yield cnt++;
+  }
+
+  print('steam 끝');
+}
+
+Future<void> future(int sec) async {
+  await Future.delayed(Duration(seconds: sec));
+  print('done in $sec');
 }
 
 void exception() {
@@ -14,7 +44,7 @@ void exception() {
     print('0으로 나누지 마세요.');
     print(s);
   } catch (e) {
-    rethrow;
+    // rethrow;
   } finally {
     print('try문 끝남');
   }
