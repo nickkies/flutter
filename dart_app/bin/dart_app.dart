@@ -1,4 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+
 void main() {
+  rps();
+  print('----------------------------');
   asyncProgram();
   exception();
   forLoop();
@@ -100,4 +106,37 @@ String ifControl(bool bool) {
 
 int add(int num1, int num2) {
   return num1 + num2;
+}
+
+void rps() {
+  print('가위 바위 보~');
+  final String input = stdin.readLineSync(encoding: utf8) ?? 'Error';
+
+  const list = ['가위', '바위', '보'];
+  final cmp = list[Random().nextInt(list.length)];
+
+  switch (input) {
+    case '가위':
+      getRes('보', '바위', cmp);
+    case '바위':
+      getRes('가위', '보', cmp);
+    case '보':
+      getRes('바위', '가위', cmp);
+    default:
+      print('`가위`, `바위`, `보` 중에서 입력하세요.');
+      rps();
+  }
+}
+
+void getRes(String win, String lose, String cmp) {
+  print('컴퓨터는 $cmp를 냈습니다.');
+
+  if (cmp == win) {
+    print('승리~');
+  } else if (cmp == lose) {
+    print('패배~');
+  } else {
+    print('비김. 다시 가위 바위 보');
+    rps();
+  }
 }
