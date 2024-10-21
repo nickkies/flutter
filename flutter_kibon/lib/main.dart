@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_kibon/widgetInAllDirections.dart';
+import 'package:flutter_kibon/widget_in_all_directions.dart';
 // import 'package:flutter_kibon/container.dart';
 // import 'package:flutter_kibon/material.dart';
 
