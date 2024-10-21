@@ -34,7 +34,7 @@ Stream<int> stream() async* {
     yield cnt++;
   }
 
-  print('steam 끝');
+  print('stream 끝');
 }
 
 Future<void> future(int sec) async {
