@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_kibon/inputs.dart';
+import 'package:flutter_kibon/callback.dart';
+// import 'package:flutter_kibon/inputs.dart';
 // import 'package:flutter_kibon/state.dart';
 // import 'package:flutter_kibon/constraint.dart';
 // import 'package:flutter_kibon/stack_container.dart';
@@ -9,5 +10,5 @@ import 'package:flutter_kibon/inputs.dart';
 // import 'package:flutter_kibon/material.dart';
 
 void main() {
-  runApp(const Inputs());
+  runApp(const MyCallback());
 }
