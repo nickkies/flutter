@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_kibon/state.dart';
+import 'package:flutter_kibon/inputs.dart';
+// import 'package:flutter_kibon/state.dart';
 // import 'package:flutter_kibon/constraint.dart';
 // import 'package:flutter_kibon/stack_container.dart';
 // import 'package:flutter_kibon/flex_container.dart';
@@ -8,5 +9,5 @@ import 'package:flutter_kibon/state.dart';
 // import 'package:flutter_kibon/material.dart';
 
 void main() {
-  runApp(const MyState());
+  runApp(const Inputs());
 }
