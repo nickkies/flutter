@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_kibon/route.dart';
+import 'package:flutter_kibon/navigate.dart';
+// import 'package:flutter_kibon/route.dart';
 // import 'package:flutter_kibon/asset.dart';
 // import 'package:flutter_kibon/pub_dev.dart';
 // import 'package:flutter_kibon/callback.dart';
@@ -13,5 +14,5 @@ import 'package:flutter_kibon/route.dart';
 // import 'package:flutter_kibon/material.dart';
 
 void main() {
-  runApp(const MyRoute());
+  runApp(const Navigate());
 }
