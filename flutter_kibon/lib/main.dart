@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_kibon/my_go_router.dart';
+import 'package:flutter_kibon/theme.dart';
+// import 'package:flutter_kibon/my_go_router.dart';
 // import 'package:flutter_kibon/navigate.dart';
 // import 'package:flutter_kibon/route.dart';
 // import 'package:flutter_kibon/asset.dart';
@@ -15,5 +16,5 @@ import 'package:flutter_kibon/my_go_router.dart';
 // import 'package:flutter_kibon/material.dart';
 
 void main() {
-  runApp(const MyGoRouter());
+  runApp(const MyTheme());
 }
