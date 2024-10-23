@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_kibon/pub_dev.dart';
+import 'package:flutter_kibon/asset.dart';
+// import 'package:flutter_kibon/pub_dev.dart';
 // import 'package:flutter_kibon/callback.dart';
 // import 'package:flutter_kibon/inputs.dart';
 // import 'package:flutter_kibon/state.dart';
@@ -11,5 +12,5 @@ import 'package:flutter_kibon/pub_dev.dart';
 // import 'package:flutter_kibon/material.dart';
 
 void main() {
-  runApp(const PubDev());
+  runApp(const Asset());
 }
