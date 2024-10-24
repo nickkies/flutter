@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:rps_game/game/cpu_input.dart';
-import 'package:rps_game/game/game_result.dart';
-import 'package:rps_game/game/user_input.dart';
+import 'package:rps_game/game/widget/cpu_input.dart';
+import 'package:rps_game/game/widget/game_result.dart';
+import 'package:rps_game/game/widget/user_input.dart';
 
 class GameBody extends StatefulWidget {
   const GameBody({super.key});
