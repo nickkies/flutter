@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:rps_game/game/enum.dart';
 
@@ -15,6 +17,7 @@ class GameBody extends StatefulWidget {
 class _GameBodyState extends State<GameBody> {
   late bool isDone;
   InputType? _userInput;
+  InputType? _cpuInput;
 
   @override
   void initState() {
@@ -26,16 +29,23 @@ class _GameBodyState extends State<GameBody> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(child: CpuInput(isDone: isDone)),
+        Expanded(child: CpuInput(isDone: isDone, cpuInput: _cpuInput)),
         Expanded(child: GameResult(isDone: isDone)),
-        Expanded(child: UserInput(isDone: isDone, callback: setUserInput)),
+        Expanded(child: UserInput(isDone: isDone, callback: draw)),
       ],
     );
   }
 
-  void setUserInput(InputType userInput) {
+  void draw(InputType userInput) {
     setState(() {
+      // Generate and set cpu input
+      final rd = Random();
+      setState(() => _cpuInput = InputType.values[rd.nextInt(3)]);
+
+      // Set user input
       _userInput = userInput;
+
+      // Switch to result mode
       isDone = true;
     });
   }

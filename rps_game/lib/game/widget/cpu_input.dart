@@ -4,8 +4,9 @@ import 'package:rps_game/game/widget/input_card.dart';
 
 class CpuInput extends StatelessWidget {
   final bool isDone;
+  final InputType? cpuInput;
 
-  const CpuInput({required this.isDone, super.key});
+  const CpuInput({super.key, required this.isDone, this.cpuInput});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class CpuInput extends StatelessWidget {
 
   Widget _getCpuInput() {
     if (isDone) {
-      return Image.asset(InputType.rock.path);
+      return Image.asset(cpuInput!.path);
     }
 
     return const SizedBox(
