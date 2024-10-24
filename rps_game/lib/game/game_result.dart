@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class GameResult extends StatelessWidget {
-  const GameResult({super.key});
+  final bool isDone;
+
+  const GameResult({required this.isDone, super.key});
 
   @override
   Widget build(BuildContext context) {

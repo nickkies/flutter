@@ -12,13 +12,21 @@ class GameBody extends StatefulWidget {
 }
 
 class _GameBodyState extends State<GameBody> {
+  late bool isDone;
+
+  @override
+  void initState() {
+    super.initState();
+    isDone = false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Expanded(child: CpuInput()),
-        Expanded(child: GameResult()),
-        Expanded(child: UserInput()),
+        Expanded(child: CpuInput(isDone: isDone)),
+        Expanded(child: GameResult(isDone: isDone)),
+        Expanded(child: UserInput(isDone: isDone)),
       ],
     );
   }
