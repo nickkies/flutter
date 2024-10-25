@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:rps_game/game/enum.dart';
 
 class GameResult extends StatelessWidget {
   final bool isDone;
+  final Result? result;
+  final VoidCallback callback;
 
-  const GameResult({required this.isDone, super.key});
+  const GameResult({
+    super.key,
+    required this.isDone,
+    required this.callback,
+    this.result,
+  });
 
   @override
   Widget build(BuildContext context) {
     if (isDone) {
       return Column(
         children: [
-          const Text('승리!', style: TextStyle(fontSize: 32)),
+          Text(result!.displayString, style: const TextStyle(fontSize: 32)),
           const SizedBox(height: 10),
           TextButton(
-            onPressed: () {},
+            onPressed: () => callback.call(),
             child: const Text('다시하기', style: TextStyle(fontSize: 18)),
           )
         ],
