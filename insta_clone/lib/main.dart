@@ -38,6 +38,14 @@ class InstaCloneHome extends StatefulWidget {
 }
 
 class _InstaCloneHomeState extends State<InstaCloneHome> {
+  late int idx;
+
+  @override
+  void initState() {
+    super.initState();
+    idx = 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,8 +69,10 @@ class _InstaCloneHomeState extends State<InstaCloneHome> {
           ),
         ],
       ),
-      body: const InstaBody(),
+      body: InstaBody(idx),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: idx,
+        onTap: (newIdx) => setState(() => idx = newIdx),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home, size: 28),
