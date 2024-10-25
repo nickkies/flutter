@@ -36,7 +36,13 @@ class _GameBodyState extends State<GameBody> {
             result: getResult(),
           ),
         ),
-        Expanded(child: UserInput(isDone: isDone, callback: draw)),
+        Expanded(
+          child: UserInput(
+            isDone: isDone,
+            callback: draw,
+            userInput: _userInput,
+          ),
+        ),
       ],
     );
   }
