@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class SearchScreeen extends StatelessWidget {
@@ -52,6 +53,18 @@ class SearchGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final rd = Random();
+    final gridItems = List.generate(30,
+        (i) => Colors.primaries[rd.nextInt(Colors.primaries.length)].shade300);
+
+    return GridView.count(
+      padding: EdgeInsets.zero,
+      mainAxisSpacing: 4,
+      crossAxisSpacing: 4,
+      crossAxisCount: 3,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      children: gridItems.map((e) => Container(color: e)).toList(),
+    );
   }
 }
