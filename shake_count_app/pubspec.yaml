@@ -38,6 +38,7 @@ dependencies:
     git:
       url: https://github.com/BansookNam/shake
   velocity_x: ^4.2.1
+  flutter_native_splash: ^2.4.2
 
 dev_dependencies:
   flutter_test:
