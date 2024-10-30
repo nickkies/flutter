@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shake/shake.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -70,9 +71,19 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              '흔들어서 카운트를 올려보아요.',
-            ),
+            '흔들어서 카운트를 올려보아요.'
+                .text
+                .color(Colors.black87)
+                .bold
+                .size(20)
+                .isIntrinsic
+                .makeCentered()
+                .box
+                .green100
+                .height(120)
+                .rounded
+                .make()
+                .p(10),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.displayLarge,
