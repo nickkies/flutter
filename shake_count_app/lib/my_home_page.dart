@@ -22,6 +22,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   int _counter = 0;
   late ShakeDetector _sd;
+  AppLifecycleState? _als;
 
   @override
   void initState() {
@@ -43,6 +44,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == _als) return;
+
     switch (state) {
       case AppLifecycleState.resumed:
         _sd.startListening();
