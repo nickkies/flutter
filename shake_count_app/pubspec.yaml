@@ -37,6 +37,7 @@ dependencies:
   shake:
     git:
       url: https://github.com/BansookNam/shake
+  velocity_x: ^4.2.1
 
 dev_dependencies:
   flutter_test:
