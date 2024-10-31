@@ -1,3 +1,5 @@
+import 'package:after_layout/after_layout.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:ttos/common/common.dart';
 import 'package:ttos/common/theme/custom_theme_app.dart';
 import 'package:ttos/screen/main/s_main.dart';
@@ -18,9 +20,16 @@ class App extends StatefulWidget {
   State<App> createState() => AppState();
 }
 
-class AppState extends State<App> with Nav, WidgetsBindingObserver {
+class AppState extends State<App>
+    with Nav, WidgetsBindingObserver, AfterLayoutMixin {
   @override
   GlobalKey<NavigatorState> get navigatorKey => App.navigatorKey;
+
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    FlutterNativeSplash.remove();
+    throw UnimplementedError();
+  }
 
   @override
   void initState() {
