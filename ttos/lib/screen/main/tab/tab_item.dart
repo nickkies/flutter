@@ -1,11 +1,18 @@
-import 'package:ttos/common/common.dart';
-import 'package:ttos/screen/main/tab/favorite/f_favorite.dart';
-import 'package:ttos/screen/main/tab/home/f_home.dart';
 import 'package:flutter/material.dart';
+
+import 'package:ttos/common/common.dart';
+import 'package:ttos/screen/main/tab/all/f_all.dart';
+import 'package:ttos/screen/main/tab/benefit/f_benefit.dart';
+import 'package:ttos/screen/main/tab/home/f_home.dart';
+import 'package:ttos/screen/main/tab/stock/f_stock.dart';
+import 'package:ttos/screen/main/tab/ttos_pay/f_ttos_pay.dart';
 
 enum TabItem {
   home(Icons.home, '홈', HomeFragment()),
-  favorite(Icons.star, '즐겨찾기', FavoriteFragment(isShowBackButton: false));
+  benefit(Icons.star, '혜택', BenefitFragment()),
+  ttosPay(Icons.payment, '토스페이', TtosPayFragment()),
+  stock(Icons.stacked_line_chart, '주식', StockFragment()),
+  all(Icons.menu, '전체', AllFragment());
 
   final IconData activeIcon;
   final IconData inActiveIcon;
