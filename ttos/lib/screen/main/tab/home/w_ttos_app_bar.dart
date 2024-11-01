@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ttos/common/common.dart';
+import 'package:ttos/screen/notification/s_notification.dart';
 
 class TtosAppBar extends StatefulWidget {
   static const double appBarHeight = 60;
@@ -25,24 +26,29 @@ class _TtosAppBarState extends State<TtosAppBar> {
           emptyExpanded,
           Image.asset('$basePath/icon/map_point.png', height: 30),
           width10,
-          Stack(
-            children: [
-              Image.asset('$basePath/icon/notification.png', height: 30),
-              if (_showRedDot)
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      width: 6,
-                      height: 6,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.red,
+          Tap(
+            onTap: () {
+              Nav.push(const NotificationScreen());
+            },
+            child: Stack(
+              children: [
+                Image.asset('$basePath/icon/notification.png', height: 30),
+                if (_showRedDot)
+                  Positioned.fill(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        width: 6,
+                        height: 6,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
                       ),
                     ),
-                  ),
-                )
-            ],
+                  )
+              ],
+            ),
           ),
           width10,
         ],
