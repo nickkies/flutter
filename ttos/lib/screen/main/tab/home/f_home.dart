@@ -1,8 +1,10 @@
 import 'package:ttos/common/common.dart';
+import 'package:ttos/common/dart/extension/num_duration_extension.dart';
 import 'package:ttos/common/widget/w_big_button.dart';
 import 'package:ttos/common/widget/w_rounded_container.dart';
 import 'package:ttos/screen/dialog/d_message.dart';
 import 'package:flutter/material.dart';
+import 'package:ttos/screen/main/s_main.dart';
 import 'package:ttos/screen/main/tab/home/bank_accounts_dummy.dart';
 import 'package:ttos/screen/main/tab/home/w_bank_account.dart';
 import 'package:ttos/screen/main/tab/home/w_ttos_app_bar.dart';
@@ -21,28 +23,39 @@ class HomeFragment extends StatelessWidget {
         color: Colors.black,
         child: Stack(
           children: [
-            SingleChildScrollView(
-              padding: const EdgeInsets.only(top: 70),
-              child: Column(
-                children: [
-                  BigButton('또스뱅크', onTap: () {
-                    context.showSnackbar('또스뱅크를 눌렀어요');
-                  }),
-                  height10,
-                  RoundedContainer(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        '자산'.text.bold.white.make(),
-                        height5,
-                        ...bankAccounts
-                            .map((e) => BankAccountWidget(e))
-                            .toList()
-                      ],
+            RefreshIndicator(
+              edgeOffset: TtosAppBar.appBarHeight,
+              onRefresh: () async {
+                await sleepAsync(500.ms);
+              },
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.only(
+                  top: TtosAppBar.appBarHeight,
+                  bottom: MainScreenState.bottomNavigatorHeight,
+                ),
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    height10,
+                    BigButton('또스뱅크', onTap: () {
+                      context.showSnackbar('또스뱅크를 눌렀어요');
+                    }),
+                    height10,
+                    RoundedContainer(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          '자산'.text.bold.white.make(),
+                          height5,
+                          ...bankAccounts
+                              .map((e) => BankAccountWidget(e))
+                              .toList()
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ).pSymmetric(h: 20),
+                  ],
+                ).pSymmetric(h: 20),
+              ),
             ),
             const TtosAppBar(),
           ],
