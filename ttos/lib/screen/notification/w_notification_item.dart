@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ttos/common/common.dart';
-import 'package:ttos/common/dart/extension/datetime_extension.dart';
 import 'package:ttos/screen/notification/vo/vo_notification.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationItemWidget extends StatefulWidget {
   final TtosNotification notification;
@@ -34,7 +34,16 @@ class _NotificationWidgetState extends State<NotificationItemWidget> {
                   .size(12)
                   .make(),
               Expanded(child: Container()),
-              widget.notification.dt.formattedDateTime.text.make(),
+              timeago
+                  .format(
+                    widget.notification.dt,
+                    locale: context.locale.languageCode,
+                  )
+                  .text
+                  .size(13)
+                  .color(context.appColors.lessImportantText)
+                  .make(),
+              width10,
             ],
           ),
           widget.notification.desc.text
