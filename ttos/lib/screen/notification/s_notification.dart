@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ttos/screen/notification/d_notification.dart';
 import 'package:ttos/screen/notification/notification_dummy.dart';
 import 'package:ttos/screen/notification/w_notification_item.dart';
 
@@ -20,7 +21,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
             delegate: SliverChildBuilderDelegate(
               childCount: notificationDummies.length,
               (context, idx) => NotificationItemWidget(
-                  notification: notificationDummies[idx]),
+                notification: notificationDummies[idx],
+                onTap: () =>
+                    NotificationDialog(notificationDummies[idx]).show(),
+              ),
             ),
           ),
         ],
