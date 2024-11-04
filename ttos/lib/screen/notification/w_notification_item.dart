@@ -40,7 +40,7 @@ class _NotificationWidgetState extends State<NotificationItemWidget> {
                   width: iconWidth,
                 ),
                 widget.notification.type.name.text
-                    .color(context.appColors.lessImportantText)
+                    .color(context.appColors.lessImportant)
                     .size(12)
                     .make(),
                 Expanded(child: Container()),
@@ -51,7 +51,7 @@ class _NotificationWidgetState extends State<NotificationItemWidget> {
                     )
                     .text
                     .size(13)
-                    .color(context.appColors.lessImportantText)
+                    .color(context.appColors.lessImportant)
                     .make(),
                 width10,
               ],
