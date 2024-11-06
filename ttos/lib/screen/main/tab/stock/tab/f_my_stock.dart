@@ -3,6 +3,7 @@ import 'package:ttos/common/common.dart';
 import 'package:ttos/common/widget/long_button.dart';
 import 'package:ttos/common/widget/w_arrow.dart';
 import 'package:ttos/common/widget/w_rounded_container.dart';
+import 'package:ttos/screen/main/tab/stock/tab/w_interest_stock_list.dart';
 
 class MyStockFragment extends StatelessWidget {
   const MyStockFragment({super.key});
@@ -48,30 +49,39 @@ class MyStockFragment extends StatelessWidget {
         ).pSymmetric(h: 20),
       );
 
-  Widget myStock(BuildContext context) => Container(
-        color: context.appColors.roundedBackground,
-        child: Column(
-          children: [
-            height30,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget myStock(BuildContext context) => Column(
+        children: [
+          Container(
+            color: context.appColors.roundedBackground,
+            child: Column(
               children: [
-                '관심주식'.text.make(),
-                '편집하기'.text.bold.color(context.appColors.lessImportant).make(),
+                height30,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    '관심주식'.text.make(),
+                    '편집하기'
+                        .text
+                        .bold
+                        .color(context.appColors.lessImportant)
+                        .make(),
+                  ],
+                ),
+                height20,
+                Tap(
+                  onTap: () => context.showSnackbar('기본'),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      '기본'.text.make(),
+                      const Arrow(direction: AxisDirection.up),
+                    ],
+                  ).pOnly(bottom: 20),
+                ),
               ],
-            ),
-            height20,
-            Tap(
-              onTap: () => context.showSnackbar('기본'),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  '기본'.text.make(),
-                  const Arrow(direction: AxisDirection.up),
-                ],
-              ).pOnly(bottom: 20),
-            ),
-          ],
-        ).pSymmetric(h: 20),
+            ).pSymmetric(h: 20),
+          ),
+          const InterestStockListWidget(),
+        ],
       );
 }
