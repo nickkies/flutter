@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ttos/common/common.dart';
 import 'package:ttos/common/widget/image_button.dart';
+import 'package:ttos/screen/main/tab/stock/search/s_search_stock.dart';
 import 'package:ttos/screen/main/tab/stock/tab/f_my_stock.dart';
 import 'package:ttos/screen/main/tab/stock/tab/f_todays_discovery.dart';
 
@@ -27,7 +28,7 @@ class _StockFragmentState extends State<StockFragment>
           actions: [
             ImageButton(
               imagePath: '$basePath/icon/stock_search.png',
-              onTap: () => context.showSnackbar('검색'),
+              onTap: () => Nav.push(const SearchStockScreen()),
             ),
             ImageButton(
               imagePath: '$basePath/icon/stock_calendar.png',
