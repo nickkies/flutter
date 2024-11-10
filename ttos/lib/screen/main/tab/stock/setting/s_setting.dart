@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ttos/common/common.dart';
+import 'package:ttos/common/data/preference/prefs.dart';
 import 'package:ttos/screen/main/tab/stock/setting/w_switch_menu.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -10,7 +11,13 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  bool isPushOn = false;
+  late bool isPushOn;
+
+  @override
+  void initState() {
+    isPushOn = Prefs.isPushOn.get();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,10 @@ class _SettingScreenState extends State<SettingScreen> {
           SwitchMenuWidget(
             '푸시 설정',
             isPushOn,
-            onTap: (isOn) => setState(() => isPushOn = isOn),
+            onTap: (isOn) {
+              Prefs.isPushOn.set(isOn);
+              setState(() => isPushOn = isOn);
+            },
           ),
 
           // slider
