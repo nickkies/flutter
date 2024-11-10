@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ttos/common/common.dart';
+import 'package:ttos/screen/main/tab/stock/search/s_stock_detail.dart';
 import 'package:ttos/screen/main/tab/stock/search/search_stock_data.dart';
 
 class SearchAutoCompleteListWidget extends StatelessWidget
     with SearchStockDataProvider {
-  SearchAutoCompleteListWidget({super.key});
+  final TextEditingController controller;
+  SearchAutoCompleteListWidget(this.controller, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,9 @@ class SearchAutoCompleteListWidget extends StatelessWidget
 
         return Tap(
           onTap: () {
-            // stock detail로 이동
+            controller.clear();
+            searchData.addHistory(stockName);
+            Nav.push(StockDetailScreen(stockName));
           },
           child: stockName.text.make().p(20),
         );

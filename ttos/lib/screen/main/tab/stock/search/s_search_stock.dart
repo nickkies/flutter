@@ -44,7 +44,7 @@ class _SearchStockScreenState extends State<SearchStockScreen>
                   PopularSearchStockListWidget()
                 ],
               )
-            : SearchAutoCompleteListWidget(),
+            : SearchAutoCompleteListWidget(controller),
       ),
     );
   }
