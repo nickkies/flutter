@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ttos/common/common.dart';
+import 'package:ttos/screen/main/tab/stock/setting/w_os_switch.dart';
 
 class SwitchMenuWidget extends StatelessWidget {
   final String title;
@@ -17,10 +18,10 @@ class SwitchMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         title.text.bold.make(),
-        emptyExpanded,
-        Switch(value: isOn, onChanged: onTap)
+        OsSwtichWidget(value: isOn, onChanged: onTap)
       ],
     ).p20();
   }
