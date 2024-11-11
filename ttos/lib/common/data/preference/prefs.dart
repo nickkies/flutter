@@ -5,4 +5,6 @@ import 'package:ttos/common/theme/custom_theme.dart';
 class Prefs {
   static final appTheme = NullablePreferenceItem<CustomTheme>('appTheme');
   static final isPushOnRx = RxPreferenceItem<bool, RxBool>('isPushOn', false);
+  static final sliderPosiion =
+      RxPreferenceItem<double, RxDouble>('sliderPosition', 0.0);
 }

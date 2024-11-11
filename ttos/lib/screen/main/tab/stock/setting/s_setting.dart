@@ -26,7 +26,12 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ),
 
-          // slider
+          Obx(
+            () => Slider(
+              value: Prefs.sliderPosiion.get(),
+              onChanged: (val) => Prefs.sliderPosiion(val),
+            ),
+          )
 
           // date time
 
