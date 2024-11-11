@@ -48,7 +48,11 @@ class _TtosAppBarState extends State<TtosAppBar> {
                     ),
                   )
               ],
-            ),
+            )
+                .animate(onComplete: (controller) => controller.repeat())
+                .shake(duration: 1500.ms, hz: 5)
+                .then()
+                .fadeOut(duration: 1000.ms),
           ),
           width10,
         ],

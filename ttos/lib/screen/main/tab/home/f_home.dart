@@ -1,5 +1,4 @@
 import 'package:ttos/common/common.dart';
-import 'package:ttos/common/dart/extension/num_duration_extension.dart';
 import 'package:ttos/common/widget/w_big_button.dart';
 import 'package:ttos/common/widget/w_rounded_container.dart';
 import 'package:ttos/screen/dialog/d_message.dart';
@@ -54,7 +53,11 @@ class HomeFragment extends StatelessWidget {
                       ),
                     ),
                   ],
-                ).pSymmetric(h: 20),
+                )
+                    .pSymmetric(h: 20)
+                    .animate()
+                    .slideY(duration: 1000.ms)
+                    .fadeIn(duration: 1000.ms),
               ),
             ),
             const TtosAppBar(),
