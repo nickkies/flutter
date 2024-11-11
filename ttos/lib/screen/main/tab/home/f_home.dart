@@ -1,3 +1,4 @@
+import 'package:live_background/widget/live_background_widget.dart';
 import 'package:ttos/common/common.dart';
 import 'package:ttos/common/widget/w_big_button.dart';
 import 'package:ttos/common/widget/w_rounded_container.dart';
@@ -22,6 +23,7 @@ class HomeFragment extends StatelessWidget {
         color: Colors.black,
         child: Stack(
           children: [
+            const LiveBackgroundWidget(),
             RefreshIndicator(
               edgeOffset: TtosAppBar.appBarHeight,
               onRefresh: () async {
