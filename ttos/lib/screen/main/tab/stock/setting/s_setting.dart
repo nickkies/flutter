@@ -4,6 +4,7 @@ import 'package:ttos/common/common.dart';
 import 'package:ttos/common/dart/extension/datetime_extension.dart';
 import 'package:ttos/common/data/preference/prefs.dart';
 import 'package:ttos/common/widget/w_big_button.dart';
+import 'package:ttos/screen/main/tab/stock/setting/d_number.dart';
 import 'package:ttos/screen/main/tab/stock/setting/w_switch_menu.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -46,6 +47,18 @@ class _SettingScreenState extends State<SettingScreen> {
                 if (date == null) return;
 
                 Prefs.birthday(date);
+              },
+            ),
+          ),
+          Obx(
+            () => BigButton(
+              '저장된 숫자 ${Prefs.number.get()}',
+              onTap: () async {
+                final int? number = await NumberDialog().show();
+
+                if (number == null) return;
+
+                Prefs.number(number);
               },
             ),
           ),
