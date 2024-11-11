@@ -6,6 +6,7 @@ import 'package:ttos/common/data/preference/prefs.dart';
 import 'package:ttos/common/widget/w_big_button.dart';
 import 'package:ttos/screen/main/tab/stock/setting/d_number.dart';
 import 'package:ttos/screen/main/tab/stock/setting/w_switch_menu.dart';
+import 'package:ttos/screen/opensource/s_opensource.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -61,6 +62,10 @@ class _SettingScreenState extends State<SettingScreen> {
                 Prefs.number(number);
               },
             ),
+          ),
+          BigButton(
+            '오픈소스 화면',
+            onTap: () async => Nav.push(const OpensourceScreen()),
           ),
           // number dialog
         ],
