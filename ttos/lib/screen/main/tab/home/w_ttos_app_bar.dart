@@ -13,6 +13,7 @@ class TtosAppBar extends StatefulWidget {
 
 class _TtosAppBarState extends State<TtosAppBar> {
   bool _showRedDot = false;
+  int _tappingCount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +23,25 @@ class _TtosAppBarState extends State<TtosAppBar> {
       child: Row(
         children: [
           width10,
-          Image.asset('$basePath/icon/toss.png', height: 30),
+          // AnimatedContainer(
+          //   duration: 1000.ms,
+          //   height: _tappingCount % 2 == 1 ? 60 : 30,
+          //   curve: Curves.decelerate,
+          //   child: Image.asset('$basePath/icon/toss.png'),
+          // ),
+          AnimatedCrossFade(
+            firstChild: Image.asset('$basePath/icon/toss.png', height: 30),
+            secondChild:
+                Image.asset('$basePath/icon/map_point.png', height: 30),
+            crossFadeState: _tappingCount % 2 == 1
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
+            duration: 1000.ms,
+          ),
           emptyExpanded,
-          Image.asset('$basePath/icon/map_point.png', height: 30),
+          Tap(
+              onTap: () => setState(() => _tappingCount++),
+              child: Image.asset('$basePath/icon/map_point.png', height: 30)),
           width10,
           Tap(
             onTap: () {
