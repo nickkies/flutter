@@ -14,7 +14,7 @@ class AnimatedAppBar extends StatefulWidget {
 
 class _AnimatedAppBarState extends State<AnimatedAppBar> {
   double scrollPosition = 0;
-  final Duration duration = 250.ms;
+  Duration get duration => 10.ms;
 
   @override
   void initState() {
@@ -24,6 +24,14 @@ class _AnimatedAppBarState extends State<AnimatedAppBar> {
   }
 
   bool get isTriggred => scrollPosition > 80;
+
+  double getValue(double initial, double target) {
+    if (isTriggred) return target;
+
+    double fraction = scrollPosition / 80;
+
+    return initial + (target - initial) * fraction;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +50,13 @@ class _AnimatedAppBarState extends State<AnimatedAppBar> {
             AnimatedContainer(
               duration: duration,
               padding: EdgeInsets.only(
-                  left: isTriggred ? 50 : 20, top: isTriggred ? 15 : 50),
+                  left: getValue(20, 50), top: getValue(50, 15)),
               child: AnimatedDefaultTextStyle(
                 duration: duration,
                 style: TextStyle(
-                    fontSize: isTriggred ? 18 : 30,
-                    fontWeight: FontWeight.bold),
+                  fontSize: getValue(30, 18),
+                  fontWeight: FontWeight.bold,
+                ),
                 child: widget.title.text.make(),
               ),
             ),
