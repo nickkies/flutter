@@ -16,8 +16,30 @@ class SettingScreen extends StatefulWidget {
   State<SettingScreen> createState() => _SettingScreenState();
 }
 
-class _SettingScreenState extends State<SettingScreen> {
+class _SettingScreenState extends State<SettingScreen>
+    with SingleTickerProviderStateMixin {
   final scrollController = ScrollController();
+  late final AnimationController animationController =
+      AnimationController(vsync: this, duration: 2000.ms);
+
+  @override
+  void initState() {
+    super.initState();
+    animationController.addListener(() {
+      final AnimationStatus status = animationController.status;
+
+      switch (status) {
+        case AnimationStatus.forward:
+        // 여기서
+        case AnimationStatus.reverse:
+        // 뭔가를
+        case AnimationStatus.completed:
+        // 할 수도
+        case AnimationStatus.dismissed:
+        // 있음
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +60,10 @@ class _SettingScreenState extends State<SettingScreen> {
               Obx(
                 () => Slider(
                   value: Prefs.sliderPosiion.get(),
-                  onChanged: (val) => Prefs.sliderPosiion(val),
+                  onChanged: (val) {
+                    animationController.animateTo(val, duration: 0.ms);
+                    Prefs.sliderPosiion(val);
+                  },
                 ),
               ),
               Obx(
@@ -73,9 +98,18 @@ class _SettingScreenState extends State<SettingScreen> {
                 '오픈소스 화면',
                 onTap: () async => Nav.push(const OpensourceScreen()),
               ),
-              BigButton('스크롤', onTap: () {}),
-              BigButton('스크롤', onTap: () {}),
-              BigButton('스크롤', onTap: () {}),
+              BigButton('Forword animation', onTap: () async {
+                animationController.forward();
+              }),
+              BigButton('Reverse animation', onTap: () async {
+                animationController.reverse();
+              }),
+              BigButton('Repeat animation', onTap: () async {
+                animationController.repeat();
+              }),
+              BigButton('Reset animation', onTap: () async {
+                animationController.reset();
+              }),
               BigButton('스크롤', onTap: () {}),
               BigButton('스크롤', onTap: () {}),
               BigButton('스크롤', onTap: () {}),
@@ -92,7 +126,11 @@ class _SettingScreenState extends State<SettingScreen> {
               // number dialog
             ],
           ),
-          AnimatedAppBar('설정', controller: scrollController),
+          AnimatedAppBar(
+            '설정',
+            scrollController: scrollController,
+            animationController: animationController,
+          ),
         ],
       ),
     );

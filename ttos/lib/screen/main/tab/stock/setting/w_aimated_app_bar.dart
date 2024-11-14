@@ -3,10 +3,16 @@ import 'package:ttos/common/common.dart';
 import 'package:ttos/common/widget/w_arrow.dart';
 
 class AnimatedAppBar extends StatefulWidget {
-  final ScrollController controller;
+  final ScrollController scrollController;
   final String title;
+  final AnimationController animationController;
 
-  const AnimatedAppBar(this.title, {super.key, required this.controller});
+  const AnimatedAppBar(
+    this.title, {
+    super.key,
+    required this.scrollController,
+    required this.animationController,
+  });
 
   @override
   State<AnimatedAppBar> createState() => _AnimatedAppBarState();
@@ -15,12 +21,17 @@ class AnimatedAppBar extends StatefulWidget {
 class _AnimatedAppBarState extends State<AnimatedAppBar> {
   double scrollPosition = 0;
   Duration get duration => 10.ms;
+  late Animation animation = CurvedAnimation(
+      parent: widget.animationController, curve: Curves.bounceInOut);
 
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(() =>
-        setState(() => scrollPosition = widget.controller.position.pixels));
+    widget.scrollController.addListener(() => setState(
+        () => scrollPosition = widget.scrollController.position.pixels));
+    widget.animationController.addListener(() {
+      setState(() {});
+    });
   }
 
   bool get isTriggred => scrollPosition > 80;
@@ -60,9 +71,8 @@ class _AnimatedAppBarState extends State<AnimatedAppBar> {
                 child: widget.title.text.make(),
               ),
             ),
-            Positioned.fill(
-                child: Align(
-              alignment: Alignment.topRight,
+            Positioned(
+              left: animation.value * 200,
               child: TweenAnimationBuilder<Color?>(
                 tween: ColorTween(
                   begin: Colors.green,
@@ -81,7 +91,7 @@ class _AnimatedAppBarState extends State<AnimatedAppBar> {
                   height: 60,
                 ),
               ),
-            ))
+            )
           ],
         ),
       ),
