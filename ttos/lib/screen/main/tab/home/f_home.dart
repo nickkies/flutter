@@ -7,15 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:ttos/screen/main/s_main.dart';
 import 'package:ttos/screen/main/tab/home/bank_accounts_dummy.dart';
 import 'package:ttos/screen/main/tab/home/w_bank_account.dart';
+import 'package:ttos/screen/main/tab/home/w_rive_like_button.dart';
 import 'package:ttos/screen/main/tab/home/w_ttos_app_bar.dart';
 
 import '../../../dialog/d_color_bottom.dart';
 import '../../../dialog/d_confirm.dart';
 
-class HomeFragment extends StatelessWidget {
+class HomeFragment extends StatefulWidget {
   const HomeFragment({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<HomeFragment> createState() => _HomeFragmentState();
+}
+
+class _HomeFragmentState extends State<HomeFragment> {
+  bool isLike = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +46,15 @@ class HomeFragment extends StatelessWidget {
                 child: Column(
                   children: [
                     height10,
+                    SizedBox(
+                      height: 250,
+                      width: 250,
+                      child: RiveLikeButtonWidget(
+                        isLike,
+                        onTapLike: (isLike) =>
+                            setState(() => this.isLike = isLike),
+                      ),
+                    ),
                     BigButton('또스뱅크', onTap: () {
                       context.showSnackbar('또스뱅크를 눌렀어요');
                     }),
@@ -55,11 +72,10 @@ class HomeFragment extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
-                    .pSymmetric(h: 20)
-                    .animate()
-                    .slideY(duration: 1000.ms)
-                    .fadeIn(duration: 1000.ms),
+                ).pSymmetric(h: 20),
+                // .animate()
+                // .slideY(duration: 1000.ms)
+                // .fadeIn(duration: 1000.ms),
               ),
             ),
             const TtosAppBar(),
