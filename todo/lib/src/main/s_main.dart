@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/src/main/tab/search/f_search.dart';
 import 'package:todo/src/main/tab/todo/f_todo.dart';
+import 'package:todo/src/main/write/d_write_todo.dart';
 
 import '../settings/settings_view.dart';
 
@@ -33,12 +34,19 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ]),
       body: _pages[_selectedIdx],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => WriteTodoDialog(),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIdx,
           onTap: (idx) {
-            setState(() {
-              _selectedIdx = idx;
-            });
+            setState(() => _selectedIdx = idx);
           },
           items: const [
             BottomNavigationBarItem(
