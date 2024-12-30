@@ -18,27 +18,42 @@ class _WriteTodoDialogState extends State<WriteTodoDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Stateful Dialog'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('Counter: $_counter'),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: _incrementCounter,
-            child: Text('Increment Counter'),
-          ),
-        ],
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text('Close'),
+      insetPadding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        height: 200,
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Stateful Bottom Dialog',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text('Counter: $_counter'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  child: Text('Increment'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Close'),
+                ),
+              ],
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
