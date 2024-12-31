@@ -8,14 +8,6 @@ class WriteTodoDialog extends StatefulWidget {
 }
 
 class _WriteTodoDialogState extends State<WriteTodoDialog> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -25,32 +17,27 @@ class _WriteTodoDialogState extends State<WriteTodoDialog> {
       insetPadding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 200,
         padding: EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'Stateful Bottom Dialog',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text('Counter: $_counter'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                  onPressed: _incrementCounter,
-                  child: Text('Increment'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Close'),
-                ),
-              ],
-            ),
+            Row(children: [
+              Text(
+                '할일을 작성해 주세요.',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Spacer(),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.calendar_month),
+              )
+            ]),
+            SizedBox(height: 20),
+            Row(children: [
+              Expanded(child: TextField()),
+              TextButton(onPressed: () {}, child: Text('추가')),
+            ]),
           ],
         ),
       ),
