@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 
 class WriteTodoDialog extends StatefulWidget {
@@ -7,7 +10,11 @@ class WriteTodoDialog extends StatefulWidget {
   State<WriteTodoDialog> createState() => _WriteTodoDialogState();
 }
 
-class _WriteTodoDialogState extends State<WriteTodoDialog> {
+class _WriteTodoDialogState extends State<WriteTodoDialog>
+    with AfterLayoutMixin {
+  final textController = TextEditingController();
+  final focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -35,12 +42,29 @@ class _WriteTodoDialogState extends State<WriteTodoDialog> {
             ]),
             SizedBox(height: 20),
             Row(children: [
-              Expanded(child: TextField()),
+              Expanded(
+                child: TextField(
+                  focusNode: focusNode,
+                  controller: textController,
+                ),
+              ),
               TextButton(onPressed: () {}, child: Text('추가')),
             ]),
           ],
         ),
       ),
     );
+  }
+
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    FocusScope.of(context).requestFocus(focusNode);
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    focusNode.dispose();
+    super.dispose();
   }
 }
