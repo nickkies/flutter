@@ -12,6 +12,7 @@ class WriteTodoDialog extends StatefulWidget {
 
 class _WriteTodoDialogState extends State<WriteTodoDialog>
     with AfterLayoutMixin {
+  DateTime _selectedDate = DateTime.now();
   final textController = TextEditingController();
   final focusNode = FocusNode();
 
@@ -35,8 +36,9 @@ class _WriteTodoDialogState extends State<WriteTodoDialog>
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               Spacer(),
+              Text(_selectedDate.toString().split(' ')[0]),
               IconButton(
-                onPressed: () {},
+                onPressed: _selectDate,
                 icon: const Icon(Icons.calendar_month),
               )
             ]),
@@ -54,6 +56,21 @@ class _WriteTodoDialogState extends State<WriteTodoDialog>
         ),
       ),
     );
+  }
+
+  void _selectDate() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime.now().subtract(const Duration(days: 365)),
+      lastDate: DateTime.now().add(const Duration(days: 365 * 10)),
+    );
+
+    if (date == null) return;
+
+    setState(() {
+      _selectedDate = date;
+    });
   }
 
   @override
