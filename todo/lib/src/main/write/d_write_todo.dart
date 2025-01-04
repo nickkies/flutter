@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/src/main/write/vo_write_to_result.dart';
 
 class WriteTodoDialog extends StatefulWidget {
   const WriteTodoDialog({super.key});
@@ -50,7 +51,16 @@ class _WriteTodoDialogState extends State<WriteTodoDialog>
                   controller: textController,
                 ),
               ),
-              TextButton(onPressed: () {}, child: Text('추가')),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(
+                      WriteToResultVo(
+                        text: textController.text,
+                        date: _selectedDate,
+                      ),
+                    );
+                  },
+                  child: Text('추가')),
             ]),
           ],
         ),

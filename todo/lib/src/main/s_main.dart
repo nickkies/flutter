@@ -4,6 +4,7 @@ import 'package:todo/src/main/tab/todo/f_todo.dart';
 import 'package:todo/src/main/write/d_write_todo.dart';
 
 import '../settings/settings_view.dart';
+import 'write/vo_write_to_result.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -35,11 +36,15 @@ class _MainScreenState extends State<MainScreen> {
       ]),
       body: _pages[_selectedIdx],
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
+        onPressed: () async {
+          final result = await showDialog<WriteToResultVo>(
             context: context,
             builder: (context) => WriteTodoDialog(),
           );
+          if (result == null) return;
+
+          debugPrint(result.text);
+          debugPrint(result.date.toString());
         },
         child: Icon(Icons.add),
       ),
