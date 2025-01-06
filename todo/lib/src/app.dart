@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todo/src/main/s_main.dart';
 
+import 'data/memory/todo_data_notifier.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -14,6 +15,8 @@ class MyApp extends StatelessWidget {
   });
 
   final SettingsController settingsController;
+
+  static final TodoDataNotifier notifier = TodoDataNotifier();
 
   @override
   Widget build(BuildContext context) {
