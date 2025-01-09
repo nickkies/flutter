@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo/src/data/memory/todo_data_holder.dart';
+import 'package:todo/src/data/memory/vo_todo.dart';
 import 'package:todo/src/main/tab/search/f_search.dart';
 import 'package:todo/src/main/tab/todo/f_todo.dart';
 import 'package:todo/src/main/write/d_write_todo.dart';
@@ -41,10 +43,14 @@ class _MainScreenState extends State<MainScreen> {
             context: context,
             builder: (context) => WriteTodoDialog(),
           );
-          if (result == null) return;
 
-          debugPrint(result.text);
-          debugPrint(result.date.toString());
+          if (!context.mounted || result == null) return;
+
+          TodoDataHolder.of(context).notifier.addTodo(Todo(
+                id: DateTime.now().microsecondsSinceEpoch,
+                title: result.text,
+                dueDate: result.date,
+              ));
         },
         child: Icon(Icons.add),
       ),
