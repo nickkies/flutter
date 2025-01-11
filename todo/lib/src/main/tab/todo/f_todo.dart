@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/src/data/memory/todo_data_holder.dart';
+import 'package:todo/src/main/tab/todo/w_todo_item.dart';
 
 class TodoFragment extends StatelessWidget {
   const TodoFragment({super.key});
@@ -15,7 +16,7 @@ class TodoFragment extends StatelessWidget {
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                   )))
-          : Column(children: todoList.map((e) => Text(e.title)).toList()),
+          : Column(children: todoList.map((e) => TodoItem(e)).toList()),
     );
   }
 }
