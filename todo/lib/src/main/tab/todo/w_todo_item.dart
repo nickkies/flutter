@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/src/data/memory/vo_todo.dart';
 import 'package:todo/src/main/tab/todo/w_todo_status.dart';
+import 'package:todo/src/utils/date_extention.dart';
 
 class TodoItem extends StatelessWidget {
   final Todo todo;
@@ -17,7 +18,7 @@ class TodoItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(todo.dueDate.toString().split(' ')[0]),
+          Text(todo.dueDate.getDateString),
           Row(children: [
             TodoStatusWidget(todo),
             Expanded(

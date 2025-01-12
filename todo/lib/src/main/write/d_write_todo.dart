@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/src/main/write/vo_write_to_result.dart';
+import 'package:todo/src/utils/date_extention.dart';
 
 class WriteTodoDialog extends StatefulWidget {
   const WriteTodoDialog({super.key});
@@ -37,7 +38,7 @@ class _WriteTodoDialogState extends State<WriteTodoDialog>
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               Spacer(),
-              Text(_selectedDate.toString().split(' ')[0]),
+              Text(_selectedDate.getDateString),
               IconButton(
                 onPressed: _selectDate,
                 icon: const Icon(Icons.calendar_month),
