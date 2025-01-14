@@ -16,7 +16,14 @@ class TodoFragment extends StatelessWidget {
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                   )))
-          : Column(children: todoList.map((e) => TodoItem(e)).toList()),
+          : SingleChildScrollView(
+              child: Column(
+                children: todoList
+                    .expand(
+                        (todo) => [TodoItem(todo), const SizedBox(height: 10)])
+                    .toList(),
+              ),
+            ),
     );
   }
 }
