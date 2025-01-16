@@ -8,7 +8,7 @@ class TodoFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: TodoDataHolder.of(context).notifier,
+      valueListenable: context.holder.notifier,
       builder: (context, todoList, child) => todoList.isEmpty
           ? Center(
               child: Text('할일을 작성해 주세요.',

@@ -46,11 +46,11 @@ class _MainScreenState extends State<MainScreen> {
 
           if (!context.mounted || result == null) return;
 
-          TodoDataHolder.of(context).notifier.addTodo(Todo(
-                id: DateTime.now().microsecondsSinceEpoch,
-                title: result.text,
-                dueDate: result.date,
-              ));
+          context.holder.notifier.addTodo(Todo(
+            id: DateTime.now().microsecondsSinceEpoch,
+            title: result.text,
+            dueDate: result.date,
+          ));
         },
         child: Icon(Icons.add),
       ),
