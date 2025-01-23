@@ -38,19 +38,8 @@ class _MainScreenState extends State<MainScreen> {
       ]),
       body: _pages[_selectedIdx],
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final result = await showDialog<WriteToResultVo>(
-            context: context,
-            builder: (context) => WriteTodoDialog(),
-          );
-
-          if (!context.mounted || result == null) return;
-
-          context.holder.notifier.addTodo(Todo(
-            id: DateTime.now().microsecondsSinceEpoch,
-            title: result.text,
-            dueDate: result.date,
-          ));
+        onPressed: () {
+          context.holder.addTodo(context);
         },
         child: Icon(Icons.add),
       ),

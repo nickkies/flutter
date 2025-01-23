@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/src/data/memory/todo_data_notifier.dart';
+import 'package:todo/src/main/write/d_write_todo.dart';
+import 'package:todo/src/main/write/vo_write_to_result.dart';
 
 import 'todo_status.dart';
 import 'vo_todo.dart';
@@ -32,6 +34,21 @@ class TodoDataHolder extends InheritedWidget {
         todo.todoStatus = TodoStatus.incomplete;
     }
     notifier.notify();
+  }
+
+  void addTodo(BuildContext context) async {
+    final result = await showDialog<WriteToResultVo>(
+      context: context,
+      builder: (context) => WriteTodoDialog(),
+    );
+
+    if (result == null) return;
+
+    notifier.addTodo(Todo(
+      id: DateTime.now().microsecondsSinceEpoch,
+      title: result.text,
+      dueDate: result.date,
+    ));
   }
 }
 
