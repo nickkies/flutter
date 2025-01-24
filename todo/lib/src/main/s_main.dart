@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todo/src/data/memory/todo_data_holder.dart';
-import 'package:todo/src/data/memory/vo_todo.dart';
 import 'package:todo/src/main/tab/search/f_search.dart';
 import 'package:todo/src/main/tab/todo/f_todo.dart';
-import 'package:todo/src/main/write/d_write_todo.dart';
 
 import '../settings/settings_view.dart';
-import 'write/vo_write_to_result.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
