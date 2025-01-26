@@ -15,6 +15,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   after_layout: ^1.2.0
+  rive: ^0.13.20
 
 dev_dependencies:
   flutter_test:
@@ -31,3 +32,4 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+    - assets/riv/
