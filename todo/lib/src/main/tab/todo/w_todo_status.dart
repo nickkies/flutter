@@ -3,6 +3,7 @@ import 'package:todo/src/data/memory/todo_data_holder.dart';
 import 'package:todo/src/data/memory/todo_status.dart';
 import 'package:todo/src/data/memory/vo_todo.dart';
 import 'package:todo/src/main/common/widget/w_tap.dart';
+import 'package:todo/src/main/tab/todo/w_fire.dart';
 
 class TodoStatusWidget extends StatelessWidget {
   final Todo todo;
@@ -25,11 +26,7 @@ class TodoStatusWidget extends StatelessWidget {
                 onChanged: null,
                 fillColor: WidgetStateProperty.all(Colors.green),
               ),
-            TodoStatus.ongoing => Checkbox(
-                value: false,
-                onChanged: null,
-                fillColor: WidgetStateProperty.all(Colors.orange),
-              ),
+            TodoStatus.ongoing => Fire(),
           }),
     );
   }
