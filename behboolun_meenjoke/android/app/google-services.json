@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "477842904998",
+    "project_id": "behboolun-meenjoke",
+    "storage_bucket": "behboolun-meenjoke.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:477842904998:android:734d90bde670f3dcf32167",
+        "android_client_info": {
+          "package_name": "com.example.behboolun_meenjoke"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "477842904998-6a3iac7lil6ltr4h9q8pooiasls4m03q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsSL1FbeMKhpG9JxoCPmbGO7MSUlZNwd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477842904998-6a3iac7lil6ltr4h9q8pooiasls4m03q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
