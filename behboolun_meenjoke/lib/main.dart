@@ -1,4 +1,4 @@
-import 'package:behboolun_meenjoke/login/login_screen.dart';
+import 'package:behboolun_meenjoke/login/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LoginScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
