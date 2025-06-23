@@ -22,6 +22,7 @@ class _SellerWidgetState extends State<SellerWidget> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ElevatedButton(onPressed: () {}, child: const Text('카테고리 일괄등록')),
+              const SizedBox(width: 8),
               ElevatedButton(onPressed: () {}, child: const Text('카테고리 등록')),
             ],
           ),
