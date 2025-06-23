@@ -1,3 +1,4 @@
+import 'package:behboolun_meenjoke/home/product_detail_screen.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 
@@ -105,7 +106,29 @@ class _HomeWidgetState extends State<HomeWidget> {
                     TextButton(onPressed: () {}, child: const Text('더보기')),
                   ],
                 ),
-                Container(height: 240, color: Colors.deepPurpleAccent),
+                Container(
+                  height: 240,
+                  color: Colors.deepPurpleAccent,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const ProductDetailScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 160,
+                          margin: const EdgeInsets.only(right: 16),
+                          decoration: const BoxDecoration(color: Colors.grey),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),

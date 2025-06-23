@@ -1,4 +1,4 @@
-import 'package:behboolun_meenjoke/home/add_product_screen.dart';
+import 'package:behboolun_meenjoke/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const AddProductScreen(),
+      home: const HomeScreen(),
     );
   }
 }
