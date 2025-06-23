@@ -17,6 +17,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
   TextEditingController stockTEC = TextEditingController();
   TextEditingController salePercentTEC = TextEditingController();
 
+  String? _requiredValidator(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return '필수 입력 항목입니다.';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,8 +72,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
               ),
               Form(
                 key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Wrap(
+                  runSpacing: 16,
                   children: [
                     TextFormField(
                       controller: titleTEC,
@@ -75,8 +82,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         labelText: '상품명',
                         hintText: '제품명을 입력하세요.',
                       ),
+                      validator: _requiredValidator,
                     ),
-                    const SizedBox(height: 16),
                     TextFormField(
                       controller: descriptionTEC,
                       decoration: const InputDecoration(
@@ -86,8 +93,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       maxLength: 254,
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
+                      validator: _requiredValidator,
                     ),
-                    const SizedBox(height: 16),
                     TextFormField(
                       controller: priceTEC,
                       decoration: const InputDecoration(
@@ -96,8 +103,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         hintText: '1개 가격 입력',
                       ),
                       keyboardType: TextInputType.number,
+                      validator: _requiredValidator,
                     ),
-                    const SizedBox(height: 16),
                     TextFormField(
                       controller: stockTEC,
                       decoration: const InputDecoration(
@@ -105,9 +112,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         labelText: '수량',
                         hintText: '입고 및 재고 수량',
                       ),
-                      keyboardType: TextInputType.twitter,
+                      keyboardType: TextInputType.number,
+                      validator: _requiredValidator,
                     ),
-                    const SizedBox(height: 16),
                     SwitchListTile.adaptive(
                       value: isSale,
                       title: const Text('할인여부'),
@@ -125,7 +132,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           return null;
                         },
                       ),
-                    const SizedBox(height: 16),
                     const Text(
                       '카테고리 선택',
                       style: TextStyle(
