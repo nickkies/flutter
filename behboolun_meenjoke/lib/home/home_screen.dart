@@ -1,3 +1,4 @@
+import 'package:behboolun_meenjoke/home/add_product_screen.dart';
 import 'package:behboolun_meenjoke/home/cart_screen.dart';
 import 'package:behboolun_meenjoke/home/widgets/home_widget.dart';
 import 'package:behboolun_meenjoke/home/widgets/seller_widget.dart';
@@ -42,7 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: const Icon(Icons.shopping_cart_outlined),
         ),
         1 => FloatingActionButton(
-          onPressed: () {},
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const AddProductScreen()),
+          ),
           child: const Icon(Icons.add),
         ),
         _ => Container(),
