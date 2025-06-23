@@ -1,4 +1,5 @@
 import 'package:behboolun_meenjoke/home/widgets/home_widget.dart';
+import 'package:behboolun_meenjoke/home/widgets/seller_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,16 +21,17 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('배부른 민족'),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.search)),
+          if (_menuIndex == 0)
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(CupertinoIcons.search),
+            ),
           IconButton(onPressed: () {}, icon: const Icon(Icons.logout)),
         ],
       ),
       body: IndexedStack(
         index: _menuIndex,
-        children: [
-          const HomeWidget(),
-          Container(color: Colors.greenAccent),
-        ],
+        children: const [HomeWidget(), SellerWidget()],
       ),
       floatingActionButton: switch (_menuIndex) {
         0 => FloatingActionButton(
