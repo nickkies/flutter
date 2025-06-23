@@ -1,4 +1,4 @@
-import 'package:behboolun_meenjoke/home/home_screen.dart';
+import 'package:behboolun_meenjoke/home/add_product_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,11 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: '배부른 민족',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const HomeScreen(),
+      home: const AddProductScreen(),
     );
   }
 }
