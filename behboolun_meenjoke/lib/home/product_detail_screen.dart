@@ -65,7 +65,70 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             PopupMenuButton(
                               icon: const Icon(Icons.more_vert),
                               itemBuilder: (context) => [
-                                const PopupMenuItem(child: Text('리뷰등록')),
+                                PopupMenuItem(
+                                  onTap: () {
+                                    int reviewScore = 0;
+
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        TextEditingController reviewTEC =
+                                            TextEditingController();
+
+                                        return StatefulBuilder(
+                                          builder: (context, setState) {
+                                            return AlertDialog(
+                                              title: const Text('리뷰 등록'),
+                                              content: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  TextField(
+                                                    controller: reviewTEC,
+                                                  ),
+                                                  Row(
+                                                    children: List.generate(
+                                                      5,
+                                                      (index) => IconButton(
+                                                        onPressed: () =>
+                                                            setState(
+                                                              () =>
+                                                                  reviewScore =
+                                                                      index,
+                                                            ),
+                                                        icon: Icon(
+                                                          Icons.star,
+                                                          color:
+                                                              index <=
+                                                                  reviewScore
+                                                              ? Colors
+                                                                    .amberAccent
+                                                              : Colors.grey,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () => Navigator.of(
+                                                    context,
+                                                  ).pop(),
+                                                  child: const Text('취소'),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {},
+                                                  child: const Text('등록'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: const Text('리뷰등록'),
+                                ),
                               ],
                             ),
                           ],
