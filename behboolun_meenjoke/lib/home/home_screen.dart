@@ -1,7 +1,8 @@
+import 'package:behboolun_meenjoke/home/cart_screen.dart';
 import 'package:behboolun_meenjoke/home/widgets/home_widget.dart';
 import 'package:behboolun_meenjoke/home/widgets/seller_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,7 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: switch (_menuIndex) {
         0 => FloatingActionButton(
-          onPressed: () {},
+          onPressed: () => Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (context) => const CartScreen())),
           child: const Icon(Icons.shopping_cart_outlined),
         ),
         1 => FloatingActionButton(
