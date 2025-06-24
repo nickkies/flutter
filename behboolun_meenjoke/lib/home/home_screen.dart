@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         0 => FloatingActionButton(
           onPressed: () => Navigator.of(
             context,
-          ).push(MaterialPageRoute(builder: (context) => const CartScreen())),
+          ).push(MaterialPageRoute(builder: (context) => CartScreen(''))),
           child: const Icon(Icons.shopping_cart_outlined),
         ),
         1 => FloatingActionButton(

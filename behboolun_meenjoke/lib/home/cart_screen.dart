@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  String uid;
+  CartScreen(this.uid, {super.key});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
