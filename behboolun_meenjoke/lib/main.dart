@@ -1,18 +1,36 @@
+import 'package:behboolun_meenjoke/firebase_options.dart';
 import 'package:behboolun_meenjoke/home/add_product_screen.dart';
 import 'package:behboolun_meenjoke/home/cart_screen.dart';
 import 'package:behboolun_meenjoke/home/home_screen.dart';
 import 'package:behboolun_meenjoke/home/product_detail_screen.dart';
 import 'package:behboolun_meenjoke/login/login_screen.dart';
 import 'package:behboolun_meenjoke/login/sign_up_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  if (kDebugMode) {
+    try {
+      await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+      FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+      FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
+    } catch (e) {
+      print(e);
+    }
+  }
+  runApp(BehboolunMinjokeApp());
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
+class BehboolunMinjokeApp extends StatelessWidget {
+  BehboolunMinjokeApp({super.key});
   final router = GoRouter(
     initialLocation: '/login',
     routes: [
