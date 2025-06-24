@@ -23,7 +23,7 @@ void main() async {
       FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
       FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
   runApp(BehboolunMinjokeApp());
