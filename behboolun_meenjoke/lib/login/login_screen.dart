@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,6 +13,24 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailTextController = TextEditingController();
   TextEditingController pwdTextController = TextEditingController();
+
+  Future<UserCredential?> signIn(String email, String password) async {
+    try {
+      return await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        // logic
+      } else if (e.code == 'wrong-password') {
+        // logic
+      }
+    } catch (e) {
+      // logic
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +86,27 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 16),
               MaterialButton(
-                onPressed: () {},
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+
+                    final result = await signIn(
+                      emailTextController.text.trim(),
+                      pwdTextController.text.trim(),
+                    );
+
+                    if (!context.mounted) return;
+
+                    if (result == null) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(const SnackBar(content: Text('로그인 실패')));
+                      return;
+                    }
+
+                    context.go('/');
+                  }
+                },
                 height: 48,
                 minWidth: double.infinity,
                 color: Colors.red,
