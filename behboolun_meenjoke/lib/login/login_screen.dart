@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,6 +31,19 @@ class _LoginScreenState extends State<LoginScreen> {
       // logic
     }
     return null;
+  }
+
+  Future<UserCredential?> signInWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   @override
@@ -120,7 +134,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: const Text('계정이 없나요? 회원가입'),
               ),
               const Divider(),
-              Image.asset('assets/btn_google_signin.png'),
+              InkWell(
+                onTap: () async {
+                  final userCredeit = await signInWithGoogle();
+
+                  if (userCredeit == null) return;
+
+                  if (context.mounted) context.go('/');
+                },
+                child: Image.asset('assets/btn_google_signin.png'),
+              ),
             ],
           ),
         ),
