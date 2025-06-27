@@ -1,5 +1,38 @@
+import 'package:behboolun_meenjoke/model/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+Future addCategory(String title) async {
+  final db = FirebaseFirestore.instance;
+  final ref = db.collection('category');
+  await ref.add({'titie': title});
+}
+
+// Future<List<Product>> fetchProducts() async {
+//   final db = FirebaseFirestore.instance;
+//   final res = await db.collection('products').orderBy('timestamp').get();
+
+//   List<Product> items = [];
+//   for (var doc in res.docs) {
+//     final item = Product.fromJson(doc.data());
+//     final realItem = item.copyWith(docId: doc.id);
+
+//     items.add(realItem);
+//   }
+
+//   return items;
+// }
+
+Stream<QuerySnapshot> streamProducts(String query) {
+  final db = FirebaseFirestore.instance;
+  if (query.isEmpty) {
+    return db.collection('products').orderBy('timestamp').snapshots();
+  }
+
+  return db.collection('products').orderBy('title').startAt([query]).endAt([
+    '$query\uf8ff',
+  ]).snapshots();
+}
 
 class SellerWidget extends StatefulWidget {
   const SellerWidget({super.key});
@@ -9,11 +42,7 @@ class SellerWidget extends StatefulWidget {
 }
 
 class _SellerWidgetState extends State<SellerWidget> {
-  Future addCategory(String title) async {
-    final db = FirebaseFirestore.instance;
-    final ref = db.collection('category');
-    await ref.add({'titie': title});
-  }
+  TextEditingController tec = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +52,14 @@ class _SellerWidgetState extends State<SellerWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SearchBar(),
+          SearchBar(
+            controller: tec,
+            leading: const Icon(Icons.search),
+            hintText: '상품명 입력',
+            onChanged: (s) {
+              setState(() {});
+            },
+          ),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -92,55 +128,102 @@ class _SellerWidgetState extends State<SellerWidget> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return Container(
-                  height: 120,
-                  margin: const EdgeInsets.only(bottom: 16),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 120,
-                        decoration: BoxDecoration(
-                          color: Colors.lightGreenAccent,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    '제품명',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+            child: StreamBuilder(
+              stream: streamProducts(tec.text),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
+                }
+
+                final items = snapshot.data?.docs
+                    .map(
+                      (e) => Product.fromJson(
+                        e.data() as Map<String, dynamic>,
+                      ).copyWith(docId: e.id),
+                    )
+                    .toList();
+                return ListView.builder(
+                  itemCount: items?.length,
+                  itemBuilder: (context, index) {
+                    final item = items?[index];
+
+                    return GestureDetector(
+                      onTap: () {
+                        debugPrint(item?.docId);
+                      },
+                      child: Container(
+                        height: 120,
+                        margin: const EdgeInsets.only(bottom: 16),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 120,
+                              decoration: BoxDecoration(
+                                color: Colors.lightGreenAccent,
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                    item?.imgUrl ??
+                                        'https://cdn.pixabay.com/photo/2025/06/11/17/18/red-gana-top-9654874_1280.jpg',
                                   ),
-                                  PopupMenuButton(
-                                    icon: const Icon(Icons.more_vert),
-                                    itemBuilder: (context) => [
-                                      const PopupMenuItem(child: Text('리뷰')),
-                                      const PopupMenuItem(child: Text('삭제')),
-                                    ],
-                                  ),
-                                ],
+                                ),
                               ),
-                              const Text('10,000원'),
-                              const Text('할인 중'),
-                              const Text('재고수량'),
-                            ],
-                          ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          item?.title ?? '제품명',
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        PopupMenuButton(
+                                          icon: const Icon(Icons.more_vert),
+                                          itemBuilder: (context) => [
+                                            const PopupMenuItem(
+                                              child: Text('리뷰'),
+                                            ),
+                                            PopupMenuItem(
+                                              onTap: () async {
+                                                await FirebaseFirestore.instance
+                                                    .collection('products')
+                                                    .doc(item?.docId)
+                                                    .delete();
+                                              },
+                                              child: const Text('삭제'),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Text('${item?.price ?? '-'} 원'),
+                                    Text(switch (item?.isSale) {
+                                      true => '할인중',
+                                      false => '안할인중',
+                                      _ => '??',
+                                    }),
+                                    Text('재고수량: ${item?.stock ?? '0'} 개'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 );
               },
             ),
