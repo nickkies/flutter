@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:behboolun_meenjoke/camera_example_page.dart';
 import 'package:behboolun_meenjoke/model/category.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -44,6 +45,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
       appBar: AppBar(
         title: const Text('상품 추가'),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return CameraExamplePage();
+                  },
+                ),
+              );
+            },
+            icon: const Icon(Icons.camera_alt_outlined),
+          ),
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.batch_prediction),
