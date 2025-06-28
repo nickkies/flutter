@@ -32,6 +32,24 @@ class _AddProductScreenState extends State<AddProductScreen> {
   TextEditingController stockTEC = TextEditingController();
   TextEditingController salePercentTEC = TextEditingController();
 
+  List<Category> categories = [];
+  void _fetchCategories() async {
+    final res = await db.collection('category').get();
+    for (var doc in res.docs) {
+      // categories.add(Category(docId: doc.id, title: doc.data()['title']));
+      categories.add(Category.fromJson(doc.data()));
+    }
+    setState(() {
+      selectedCategory = categories.first;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCategories();
+  }
+
   String? _requiredValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
       return '필수 입력 항목입니다.';
@@ -50,7 +68,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return CameraExamplePage();
+                    return const CameraExamplePage();
                   },
                 ),
               );
@@ -176,11 +194,24 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    DropdownButton(
-                      isExpanded: true,
-                      items: [],
-                      onChanged: (s) {},
-                    ),
+                    categories.isNotEmpty
+                        ? DropdownButton<Category>(
+                            isExpanded: true,
+                            value: selectedCategory,
+                            items: categories
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Text('${e.title}'),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (s) =>
+                                setState(() => selectedCategory = s),
+                          )
+                        : const Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          ),
                   ],
                 ),
               ),
