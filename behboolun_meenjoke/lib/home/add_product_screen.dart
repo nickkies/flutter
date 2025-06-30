@@ -2,6 +2,8 @@ import 'dart:typed_data';
 
 import 'package:behboolun_meenjoke/camera_example_page.dart';
 import 'package:behboolun_meenjoke/model/category.dart';
+import 'package:behboolun_meenjoke/model/product.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -35,13 +37,47 @@ class _AddProductScreenState extends State<AddProductScreen> {
   List<Category> categories = [];
   void _fetchCategories() async {
     final res = await db.collection('category').get();
+
     for (var doc in res.docs) {
       // categories.add(Category(docId: doc.id, title: doc.data()['title']));
-      categories.add(Category.fromJson(doc.data()));
+      categories.add(Category.fromJson({...doc.data(), 'docId': doc.id}));
     }
     setState(() {
       selectedCategory = categories.first;
     });
+  }
+
+  Future<Uint8List> compressedImageList(Uint8List list) async =>
+      await FlutterImageCompress.compressWithList(list, quality: 50);
+
+  Future addProduct() async {
+    if (imageData == null) return null;
+
+    final storageRef = storage.ref().child(
+      '${DateTime.now().microsecondsSinceEpoch}_${image?.name ?? '??'}',
+    );
+    final compressedData = await compressedImageList(imageData!);
+    await storageRef.putData(compressedData);
+
+    final downloadLink = await storageRef.getDownloadURL();
+
+    final saveData = Product(
+      title: titleTEC.text,
+      description: descriptionTEC.text,
+      price: int.parse(priceTEC.text),
+      stock: int.parse(stockTEC.text),
+      isSale: isSale,
+      saleRate: salePercentTEC.text.isNotEmpty
+          ? double.parse(salePercentTEC.text)
+          : 0,
+      imgUrl: downloadLink,
+      timestamp: DateTime.now().millisecondsSinceEpoch,
+    );
+
+    final doc = await db.collection('products').add(saveData.toJson());
+    await doc.collection('category').add(selectedCategory?.toJson() ?? {});
+    final categoryRef = db.collection('category').doc(selectedCategory?.docId);
+    await categoryRef.collection('products').add({'docId': doc.id});
   }
 
   @override
@@ -79,7 +115,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
             onPressed: () {},
             icon: const Icon(Icons.batch_prediction),
           ),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+          IconButton(
+            onPressed: () {
+              addProduct();
+            },
+            icon: const Icon(Icons.add),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -206,8 +247,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                   ),
                                 )
                                 .toList(),
-                            onChanged: (s) =>
-                                setState(() => selectedCategory = s),
+                            onChanged: (s) {
+                              setState(() => selectedCategory = s);
+                            },
                           )
                         : const Center(
                             child: CircularProgressIndicator.adaptive(),
