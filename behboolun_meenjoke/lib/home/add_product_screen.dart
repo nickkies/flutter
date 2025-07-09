@@ -80,6 +80,40 @@ class _AddProductScreenState extends State<AddProductScreen> {
     await categoryRef.collection('products').add({'docId': doc.id});
   }
 
+  Future addProducts() async {
+    if (imageData == null) return null;
+
+    final storageRef = storage.ref().child(
+      '${DateTime.now().microsecondsSinceEpoch}_${image?.name ?? '??'}',
+    );
+    final compressedData = await compressedImageList(imageData!);
+    await storageRef.putData(compressedData);
+
+    final downloadLink = await storageRef.getDownloadURL();
+
+    for (var i = 0; i < 10; i++) {
+      final saveData = Product(
+        title: '${titleTEC.text}$i',
+        description: descriptionTEC.text,
+        price: int.parse(priceTEC.text),
+        stock: int.parse(stockTEC.text),
+        isSale: isSale,
+        saleRate: salePercentTEC.text.isNotEmpty
+            ? double.parse(salePercentTEC.text)
+            : 0,
+        imgUrl: downloadLink,
+        timestamp: DateTime.now().millisecondsSinceEpoch,
+      );
+
+      final doc = await db.collection('products').add(saveData.toJson());
+      await doc.collection('category').add(selectedCategory?.toJson() ?? {});
+      final categoryRef = db
+          .collection('category')
+          .doc(selectedCategory?.docId);
+      await categoryRef.collection('products').add({'docId': doc.id});
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -112,7 +146,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
             icon: const Icon(Icons.camera_alt_outlined),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              addProducts();
+            },
             icon: const Icon(Icons.batch_prediction),
           ),
           IconButton(
