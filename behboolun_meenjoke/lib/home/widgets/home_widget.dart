@@ -1,4 +1,6 @@
 import 'package:behboolun_meenjoke/home/product_detail_screen.dart';
+import 'package:behboolun_meenjoke/model/category.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,13 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   PageController pageController = PageController();
   int bannerIndex = 0;
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamCategories() {
+    return FirebaseFirestore.instance.collection('category').snapshots();
+  }
+
+  List<Category> categoryItems = [];
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -82,8 +91,52 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                // TODO: 카테고리 목록
-                Container(height: 200, color: Colors.amber),
+                SizedBox(
+                  height: 200,
+                  child: StreamBuilder(
+                    stream: streamCategories(),
+                    builder: (BuildContext context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        );
+                      }
+                      categoryItems.clear();
+                      final docs = snapshot.data;
+                      final docItems = docs?.docs ?? [];
+
+                      for (var doc in docItems) {
+                        categoryItems.add(
+                          Category(docId: doc.id, title: doc.data()['title']),
+                        );
+                      }
+
+                      return GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                            ),
+                        itemCount: categoryItems.length,
+                        itemBuilder: (context, idx) {
+                          final item = categoryItems[idx];
+
+                          return Column(
+                            children: [
+                              const CircleAvatar(radius: 24),
+                              const SizedBox(height: 8),
+                              Text(
+                                item.title ?? '',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),
