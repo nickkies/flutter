@@ -1,5 +1,6 @@
 import 'package:behboolun_meenjoke/home/product_detail_screen.dart';
 import 'package:behboolun_meenjoke/model/category.dart';
+import 'package:behboolun_meenjoke/model/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,23 @@ class _HomeWidgetState extends State<HomeWidget> {
   }
 
   List<Category> categoryItems = [];
+
+  Future<List<Product>> fetchSaleProducts() async {
+    final dbRef = FirebaseFirestore.instance.collection('products');
+    final saleItems = await dbRef
+        .where('isSale', isEqualTo: true)
+        .orderBy('saleRate')
+        .get();
+
+    List<Product> products = [];
+
+    for (var item in saleItems.docs) {
+      final saleItem = Product.fromJson(item.data()).copyWith(docId: item.id);
+      products.add(saleItem);
+    }
+
+    return products;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,25 +177,71 @@ class _HomeWidgetState extends State<HomeWidget> {
                     TextButton(onPressed: () {}, child: const Text('더보기')),
                   ],
                 ),
-                Container(
+                SizedBox(
                   height: 240,
-                  color: Colors.deepPurpleAccent,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const ProductDetailScreen(),
+                  child: FutureBuilder(
+                    future: fetchSaleProducts(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        );
+                      }
+
+                      final items = snapshot.data ?? [];
+
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ProductDetailScreen(),
+                                ),
+                              );
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    width: 160,
+                                    margin: const EdgeInsets.only(right: 16),
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(8),
+                                      image: DecorationImage(
+                                        image: NetworkImage(item.imgUrl ?? ''),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  item.title ?? '',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                Text(
+                                  '${item.price} 원',
+                                  style: const TextStyle(
+                                    decoration: TextDecoration.lineThrough,
+                                  ),
+                                ),
+                                Text(
+                                  '${(item.price! * (item.saleRate! / 100)).toStringAsFixed(0)} 원',
+                                ),
+                              ],
                             ),
                           );
                         },
-                        child: Container(
-                          width: 160,
-                          margin: const EdgeInsets.only(right: 16),
-                          decoration: const BoxDecoration(color: Colors.grey),
-                        ),
                       );
                     },
                   ),
