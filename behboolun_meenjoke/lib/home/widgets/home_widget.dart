@@ -1,9 +1,9 @@
-import 'package:behboolun_meenjoke/home/product_detail_screen.dart';
 import 'package:behboolun_meenjoke/model/category.dart';
 import 'package:behboolun_meenjoke/model/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -198,12 +198,14 @@ class _HomeWidgetState extends State<HomeWidget> {
 
                           return GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ProductDetailScreen(),
-                                ),
-                              );
+                              context.go('/product', extra: item);
+
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (context) =>
+                              //         const ProductDetailScreen(),
+                              //   ),
+                              // );
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

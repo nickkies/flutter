@@ -5,6 +5,7 @@ import 'package:behboolun_meenjoke/home/home_screen.dart';
 import 'package:behboolun_meenjoke/home/product_detail_screen.dart';
 import 'package:behboolun_meenjoke/login/login_screen.dart';
 import 'package:behboolun_meenjoke/login/sign_up_screen.dart';
+import 'package:behboolun_meenjoke/model/product.dart';
 import 'package:camera/camera.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,7 +51,8 @@ class BehboolunMinjokeApp extends StatelessWidget {
           ),
           GoRoute(
             path: 'product',
-            builder: (context, state) => const ProductDetailScreen(),
+            builder: (context, state) =>
+                ProductDetailScreen(state.extra as Product),
           ),
           GoRoute(
             path: 'product/add',

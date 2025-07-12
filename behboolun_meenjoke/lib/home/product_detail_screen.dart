@@ -1,7 +1,10 @@
+import 'package:behboolun_meenjoke/model/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({super.key});
+  final Product product;
+
+  const ProductDetailScreen(this.product, {super.key});
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -11,7 +14,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('제품 상세')),
+      appBar: AppBar(title: Text('${widget.product.title}')),
       body: Column(
         children: [
           Expanded(
@@ -153,7 +156,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ),
                   DefaultTabController(
-                    length: 4,
+                    length: 2,
                     child: Column(
                       children: [
                         const TabBar(
