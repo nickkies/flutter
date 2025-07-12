@@ -25,27 +25,35 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Container(
                     height: 320,
                     padding: const EdgeInsets.all(16),
-                    decoration: const BoxDecoration(color: Colors.cyanAccent),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(widget.product.imgUrl ?? ''),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                     child: Center(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.pinkAccent,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24,
-                              vertical: 12,
-                            ),
-                            child: const Text(
-                              '할인 중',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                          switch (widget.product.isSale) {
+                            true => Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.pinkAccent,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 12,
+                              ),
+                              child: const Text(
+                                '할인 중',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                          ),
+                            _ => Container(),
+                          },
                         ],
                       ),
                     ),
@@ -58,9 +66,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              'flutter',
-                              style: TextStyle(
+                            Text(
+                              widget.product.title!,
+                              style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -137,18 +145,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ],
                         ),
                         const Text('제품 상세 정보'),
-                        const Text('상세 상세 상세'),
-                        const Row(
+                        Text(widget.product.description ?? ''),
+                        Row(
                           children: [
                             Text(
-                              '100,000원',
-                              style: TextStyle(
+                              '${(widget.product.price! * (widget.product.saleRate ?? 0) / 100).toStringAsFixed(0)}원',
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Spacer(),
-                            Icon(Icons.star, color: Colors.amberAccent),
+                            const Spacer(),
+                            const Icon(Icons.star, color: Colors.amberAccent),
                             Text('4.5'),
                           ],
                         ),
