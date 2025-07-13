@@ -1,3 +1,4 @@
+import 'package:behboolun_meenjoke/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -17,10 +18,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<UserCredential?> signIn(String email, String password) async {
     try {
-      return await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final credentail = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      userCredential = credentail;
+
+      return credentail;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         // logic

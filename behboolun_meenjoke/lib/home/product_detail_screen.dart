@@ -1,4 +1,6 @@
+import 'package:behboolun_meenjoke/main.dart';
 import 'package:behboolun_meenjoke/model/product.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -157,7 +159,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                             const Spacer(),
                             const Icon(Icons.star, color: Colors.amberAccent),
-                            Text('4.5'),
+                            const Text('4.5'),
                           ],
                         ),
                       ],
@@ -190,6 +192,42 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
           ),
           GestureDetector(
+            onTap: () async {
+              final db = FirebaseFirestore.instance;
+              final dupItems = await db
+                  .collection('cart')
+                  .where('uid', isEqualTo: userCredential?.user?.uid ?? '')
+                  .where('product.docId', isEqualTo: widget.product.docId)
+                  .get();
+
+              if (dupItems.docs.isNotEmpty) {
+                if (context.mounted) {
+                  showDialog(
+                    context: context,
+                    builder: (constext) => const AlertDialog(
+                      content: Text('장바구니에 이미 등록되어 있는 제품입니다.'),
+                    ),
+                  );
+                }
+                return;
+              }
+
+              await db.collection('cart').add({
+                'uid': userCredential?.user?.uid,
+                'email': userCredential?.user?.email,
+                'timestamp': DateTime.now().microsecondsSinceEpoch,
+                'product': widget.product.toJson(),
+                'count': 1,
+              });
+
+              if (context.mounted) {
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      const AlertDialog(content: Text('장바구니에 등록되었습니다.')),
+                );
+              }
+            },
             child: SafeArea(
               top: false,
               child: Container(
