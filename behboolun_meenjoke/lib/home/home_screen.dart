@@ -1,9 +1,10 @@
 import 'package:behboolun_meenjoke/home/add_product_screen.dart';
-import 'package:behboolun_meenjoke/home/cart_screen.dart';
 import 'package:behboolun_meenjoke/home/widgets/home_widget.dart';
 import 'package:behboolun_meenjoke/home/widgets/seller_widget.dart';
+import 'package:behboolun_meenjoke/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -37,9 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: switch (_menuIndex) {
         0 => FloatingActionButton(
-          onPressed: () => Navigator.of(
-            context,
-          ).push(MaterialPageRoute(builder: (context) => CartScreen(''))),
+          onPressed: () {
+            final uid = userCredential?.user?.uid;
+            if (uid == null) return;
+            context.go('/cart/$uid');
+            //   Navigator.of(
+            //   context,
+            // ).push(MaterialPageRoute(builder: (context) => CartScreen('')));
+          },
           child: const Icon(Icons.shopping_cart_outlined),
         ),
         1 => FloatingActionButton(
