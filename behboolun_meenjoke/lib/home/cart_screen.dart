@@ -143,16 +143,50 @@ class _CartScreenState extends State<CartScreen> {
 
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   '합계',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  '100,000,000원',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                StreamBuilder(
+                  stream: steamCartItems(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Text('0원');
+                    }
+
+                    List<Cart> items =
+                        snapshot.data?.docs
+                            .map(
+                              (e) => Cart.fromJson(
+                                e.data(),
+                              ).copyWith(cartDocId: e.id),
+                            )
+                            .toList() ??
+                        [];
+
+                    double sum = 0;
+
+                    for (Cart item in items) {
+                      if (item.product?.isSale ?? false) {
+                        sum +=
+                            item.product!.price! *
+                            (item.product!.saleRate! / 100) *
+                            (item.count ?? 1);
+                      } else {
+                        item.product!.price! * (item.count ?? 1);
+                      }
+                    }
+                    return Text(
+                      '${sum.toStringAsFixed(0)}원',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
