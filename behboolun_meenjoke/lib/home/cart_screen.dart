@@ -81,7 +81,15 @@ class _CartScreenState extends State<CartScreen> {
                                     children: [
                                       Text(item.product!.title!),
                                       IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          final ref = FirebaseFirestore.instance
+                                              .collection('cart')
+                                              .doc(item.cartDocId);
+
+                                          ref.get().then((value) {
+                                            value.reference.delete();
+                                          });
+                                        },
                                         icon: const Icon(Icons.delete),
                                       ),
                                     ],
